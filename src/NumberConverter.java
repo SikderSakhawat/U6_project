@@ -34,6 +34,7 @@ public class NumberConverter {
         return digits;
     }
 
+    // BASE CONVERTER METHODS
     public String[] convertToDecimal() {
         int[] newNum = new int[digits.length];
         int sum = 0;
@@ -88,9 +89,23 @@ public class NumberConverter {
     }
 
     public String[] allBaseConverter(int baseNum){
-        return null;
+        String num = "";
+        String[] newDigits = convertToDecimal();
+        String numStr = displayOriginalNumber(newDigits);
+        int decNum = Integer.parseInt(numStr);
+        base = baseNum;
+        while(decNum != 0){
+            num += chars[decNum % base];
+            decNum/= base;
+        }
+        String[] digits = num.split("");
+        for(int i = 0; i < digits.length / 2; i++){
+            String temp = digits[i];
+            digits[i] = digits[digits.length - (i + 1)];
+            digits[digits.length - (i + 1)] = temp;
+        }
+        return digits;
     }
-
 }
 
 
