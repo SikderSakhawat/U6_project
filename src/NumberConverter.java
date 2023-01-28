@@ -18,12 +18,11 @@ public class NumberConverter {
         this.base = base;
     }
 
-    public String displayOriginalNumber() {
+    public String displayOriginalNumber(int[] numList) {
         String o = "";
-        for (int i = 0; i < digits.length; i++) {
-            o = o + digits[i];
+        for (int i = 0; i < numList.length; i++) {
+            o = o + numList[i];
         }
-        o = o + "\n";
         return o;
     }
 
@@ -35,27 +34,53 @@ public class NumberConverter {
         int[] newNum = new int[digits.length];
         int sum = 0;
         for(int i = 0; i < digits.length; i++){
-            newNum[i] = digits[i] * (int)(Math.pow(base, digits.length - (i + 1)));
+            newNum[i] = digits[i] * (int)(Math.pow(base, digits.length - (i + 1))); // increments through the list by making each place value the value in decimal.
             sum+= newNum[i];
         }
-        String sumAsStr = sum + "";
+        String sumAsStr = sum + ""; // makes into a string to get the length, so you can increment through each digit
         int[] result = new int[sumAsStr.length()];
         for(int i = 0; i < sumAsStr.length(); i++){
-            result[i] = Integer.parseInt(String.valueOf(sumAsStr.charAt(i)));
+            result[i] = Integer.parseInt(String.valueOf(sumAsStr.charAt(i))); // sets each digit into its own element
         }
         return result;
     }
 
-    public int[] convertToBinary() {
+    public String[] convertToBinary() {
         String binaryNum = "";
         int[] newDigits = convertToDecimal();
-        int decNum = 
+        String numStr = displayOriginalNumber(newDigits);
+        int decNum = Integer.parseInt(numStr);
         base = 2;
-       return null;
+        while(decNum != 0){
+            binaryNum += decNum % base;
+            decNum/= base;
+        }
+        String[] digits = binaryNum.split("");
+        for(int i = 0; i < digits.length / 2; i++){
+            String temp = digits[i];
+            digits[i] = digits[digits.length - (i + 1)];
+            digits[digits.length - (i + 1)] = temp;
+        }
+        return digits;
     }
 
-    public int[] convertToOctal() {
-        return null;
+    public String[] convertToOctal() {
+        String num = "";
+        int[] newDigits = convertToDecimal();
+        String numStr = displayOriginalNumber(newDigits);
+        int decNum = Integer.parseInt(numStr);
+        base = 8;
+        while(decNum != 0){
+            num += decNum % base;
+            decNum/= base;
+        }
+        String[] digits = num.split("");
+        for(int i = 0; i < digits.length / 2; i++){
+            String temp = digits[i];
+            digits[i] = digits[digits.length - (i + 1)];
+            digits[digits.length - (i + 1)] = temp;
+        }
+        return digits;
     }
 
     private int returnNum(int[] numDigits){
