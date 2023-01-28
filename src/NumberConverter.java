@@ -1,53 +1,57 @@
 public class NumberConverter {
-    private int[] digits;
+    private final String[] digits;
     private int base;
-    private String[] chars = {"0","1","2","3","4","5","6","7","8","9","A",
+    private final String[] chars = {"0","1","2","3","4","5","6","7","8","9","A",
             "B","C","D","E","F","G","H","I","J","K","L",
             "M","N","O","P","Q","R","S","T","U","V","W",
             "X","Y","Z","a","b","c","d","e","f","g","h",
             "i","j","k","l","m","n","o","p","q","r","s",
             "t","u","v","w","x","y","z","+","/"};
-    public NumberConverter(int number, int base) {
-        String numberAsString = Integer.toString(number);
-        digits = new int[numberAsString.length()];
-        for (int i = 0; i < numberAsString.length(); i++) {
-            String single = numberAsString.substring(i,i+1);
-            int d = Integer.parseInt(single);
-            digits[i] = d;
+    public NumberConverter(String number, int base) {
+        digits = new String[number.length()];
+        for (int i = 0; i < number.length(); i++) {
+            String single = number.substring(i,i+1);
+            digits[i] = single;
         }
         this.base = base;
     }
-
-    public String displayOriginalNumber(int[] numList) {
+    // PRIVATE METHODS
+    private String displayOriginalNumber(String[] numList) {
         String o = "";
-        for (int i = 0; i < numList.length; i++) {
-            o = o + numList[i];
+        for (String num : numList) {
+            o += num;
         }
         return o;
     }
-
-    public int[] getDigits() {
+    private int findIndex(String element){
+        for(int i = 0; i < chars.length; i++){
+            if(chars[i].equals(element)) return i;
+        }
+        return -1;
+    }
+    // GETTER METHODS
+    public String[] getDigits() {
         return digits;
     }
 
-    public int[] convertToDecimal() {
+    public String[] convertToDecimal() {
         int[] newNum = new int[digits.length];
         int sum = 0;
         for(int i = 0; i < digits.length; i++){
-            newNum[i] = digits[i] * (int)(Math.pow(base, digits.length - (i + 1))); // increments through the list by making each place value the value in decimal.
+            newNum[i] = (int) (findIndex(digits[i]) * (Math.pow(base, digits.length - (i + 1)))); // increments through the list by making each place value the value in decimal.
             sum+= newNum[i];
         }
         String sumAsStr = sum + ""; // makes into a string to get the length, so you can increment through each digit
-        int[] result = new int[sumAsStr.length()];
+        String[] result = new String[sumAsStr.length()];
         for(int i = 0; i < sumAsStr.length(); i++){
-            result[i] = Integer.parseInt(String.valueOf(sumAsStr.charAt(i))); // sets each digit into its own element
+            result[i] = String.valueOf(sumAsStr.charAt(i)); // sets each digit into its own element
         }
         return result;
     }
 
     public String[] convertToBinary() {
         String binaryNum = "";
-        int[] newDigits = convertToDecimal();
+        String[] newDigits = convertToDecimal();
         String numStr = displayOriginalNumber(newDigits);
         int decNum = Integer.parseInt(numStr);
         base = 2;
@@ -66,7 +70,7 @@ public class NumberConverter {
 
     public String[] convertToOctal() {
         String num = "";
-        int[] newDigits = convertToDecimal();
+        String[] newDigits = convertToDecimal();
         String numStr = displayOriginalNumber(newDigits);
         int decNum = Integer.parseInt(numStr);
         base = 8;
@@ -83,13 +87,10 @@ public class NumberConverter {
         return digits;
     }
 
-    private int returnNum(int[] numDigits){
-        int sum = 0;
-        for(int i = 0; i < numDigits.length; i++){
-            sum+= numDigits[i] * (int)(Math.pow(base, numDigits.length - (i + 1)));
-        }
-        return sum;
+    public String[] allBaseConverter(int baseNum){
+        return null;
     }
+
 }
 
 
