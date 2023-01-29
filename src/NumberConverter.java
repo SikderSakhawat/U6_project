@@ -1,3 +1,8 @@
+/**
+ * This is where the methods to convert your number in between bases occur. You can convert from one base system to another,
+ * with base systems of 2 to 64, inclusive. <p></p>
+ * The digits of your necessary base systems can be modeled by the elements within String[] chars.
+ */
 public class NumberConverter {
     private final String[] digits;
     private int base;
@@ -7,15 +12,24 @@ public class NumberConverter {
             "X","Y","Z","a","b","c","d","e","f","g","h",
             "i","j","k","l","m","n","o","p","q","r","s",
             "t","u","v","w","x","y","z","+","/"};
+
+    // CONSTRUCTOR
+    /**
+     * Initializes the array of digits by separating each character in "number" into elements. Initializes the value of your base system that is being used.
+     * @param number is the number from the specific base system specified, which should accept digits that are available in that number system. <p></p>
+     * @param base is the number of the base system. Accepts all base systems from base 2 to 64 (unary number system doesn't exist).
+     */
     public NumberConverter(String number, int base) {
-        digits = new String[number.length()];
-        for (int i = 0; i < number.length(); i++) {
-            String single = number.substring(i,i+1);
-            digits[i] = single;
-        }
+        digits = number.split("");
         this.base = base;
     }
     // PRIVATE METHODS
+
+    /**
+     * Displays a string of the original number, since the numbers you work with are found in String[], not String.
+     * @param numList is the array that is separated into elements of a number
+     * @return a String that contains all elements of the list in order.
+     */
     private String displayOriginalNumber(String[] numList) {
         String o = "";
         for (String num : numList) {
@@ -23,6 +37,13 @@ public class NumberConverter {
         }
         return o;
     }
+
+    /**
+     * Finds the index of a given character within "chars", returns -1 if no character is found. <p></p>
+     * It is essentially just a .indexOf() method but for arrays.
+     * @param element is the character that is being searched for within "chars"
+     * @return the index of the element that contains "element"
+     */
     private int findIndex(String element){
         for(int i = 0; i < chars.length; i++){
             if(chars[i].equals(element)) return i;
@@ -30,11 +51,20 @@ public class NumberConverter {
         return -1;
     }
     // GETTER METHODS
+
+    /**
+     * @return Returns the array of digits that has our current number in it.
+     */
     public String[] getDigits() {
         return digits;
     }
 
     // BASE CONVERTER METHODS
+
+    /**
+     * Converts the number of our current base into a base 10 number system, or in decimal form.
+     * @return A String array that contains the number in "digits" in decimal form.
+     */
     public String[] convertToDecimal() {
         int[] newNum = new int[digits.length];
         int sum = 0;
@@ -50,6 +80,10 @@ public class NumberConverter {
         return result;
     }
 
+    /**
+     * Converts the number of our current base into a base 2 number system, or in binary form.
+     * @return A String array that contains the number in "digits" in binary form.
+     */
     public String[] convertToBinary() {
         String binaryNum = "";
         String[] newDigits = convertToDecimal();
@@ -69,6 +103,10 @@ public class NumberConverter {
         return digits;
     }
 
+    /**
+     * Converts the number of our current base into a base 8 number system, or in octal form.
+     * @return A String array that contains the number in "digits" in octal form.
+     */
     public String[] convertToOctal() {
         String num = "";
         String[] newDigits = convertToDecimal();
@@ -88,6 +126,12 @@ public class NumberConverter {
         return digits;
     }
 
+    /**
+     * Converts from the current base number system to a specified base number system.
+     * @param baseNum The value of the base system that is being converted to. <p></p>
+     * PRECONDITION: All values must be between 2 and 64, inclusive (base 1 isn't a possible base system)
+     * @return A String array that contains the number in "digits" in the "baseNum" number system.
+     */
     public String[] allBaseConverter(int baseNum){
         String num = "";
         String[] newDigits = convertToDecimal();
@@ -107,5 +151,3 @@ public class NumberConverter {
         return digits;
     }
 }
-
-
