@@ -6,6 +6,7 @@
 public class NumberConverter {
     private final String[] digits;
     private int base;
+    // Use a reference table to see which characters refer to the letters/numbers in a given number system
     private final String[] chars = {"0","1","2","3","4","5","6","7","8","9","A",
             "B","C","D","E","F","G","H","I","J","K","L",
             "M","N","O","P","Q","R","S","T","U","V","W",
@@ -20,7 +21,8 @@ public class NumberConverter {
      * @param base is the number of the base system. Accepts all base systems from base 2 to 64 (unary number system doesn't exist).
      */
     public NumberConverter(String number, int base) {
-        digits = number.split("");
+        digits = number.split(""); // split the string of the number with the number system chosen to
+        // analyse each character in the given number
         this.base = base;
     }
     // PRIVATE METHODS
@@ -68,10 +70,12 @@ public class NumberConverter {
     public String[] convertToDecimal() {
         int[] newNum = new int[digits.length];
         int sum = 0;
+        // Weighted multiplication that occurs with each place value based on the base number to get the decimal value
         for(int i = 0; i < digits.length; i++){
             newNum[i] = (int) (findIndex(digits[i]) * (Math.pow(base, digits.length - (i + 1)))); // increments through the list by making each place value the value in decimal.
             sum+= newNum[i];
         }
+        // Just setting each character value to a String[] value so that it can be returned as a String[] in the main method
         String sumAsStr = sum + ""; // makes into a string to get the length, so you can increment through each digit
         String[] result = new String[sumAsStr.length()];
         for(int i = 0; i < sumAsStr.length(); i++){
@@ -89,11 +93,13 @@ public class NumberConverter {
         String[] newDigits = convertToDecimal();
         String numStr = displayOriginalNumber(newDigits);
         int decNum = Integer.parseInt(numStr);
-        base = 2;
+        base = 2; // Since this is binary our base number system is 2
+        // Same weighted division and modding to receive our reversed string of converted numbers
         while(decNum != 0){
             binaryNum += decNum % base;
             decNum/= base;
         }
+        // Reverse the string to get the correct conversion
         String[] digits = binaryNum.split("");
         for(int i = 0; i < digits.length / 2; i++){
             String temp = digits[i];
@@ -134,14 +140,20 @@ public class NumberConverter {
      */
     public String[] allBaseConverter(int baseNum){
         String num = "";
+        // convert the number to decimal by calling the convertToDecimal() method
+        // as a medium and set it to a new string of numbers
         String[] newDigits = convertToDecimal();
         String numStr = displayOriginalNumber(newDigits);
         int decNum = Integer.parseInt(numStr);
         base = baseNum;
+        // the repeated division process happens here, where we append the correct number after
+        // taking the mod of the number and then dividing it
         while(decNum != 0){
             num += chars[decNum % base];
             decNum/= base;
         }
+        // Create a new digits variable that can reverse the characters of num, and produce the correct
+        // conversion of a base number.
         String[] digits = num.split("");
         for(int i = 0; i < digits.length / 2; i++){
             String temp = digits[i];
