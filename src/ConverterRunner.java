@@ -5,6 +5,7 @@ public class ConverterRunner {
     public static void main(String[] args) {
         System.out.println("Welcome to the Number Converter!");
         System.out.println("--------------------------------");
+        // Have a list of numbers here to be checked/displayed in console
         final String[] chars = {"0","1","2","3","4","5","6","7","8","9","A",
                 "B","C","D","E","F","G","H","I","J","K","L",
                 "M","N","O","P","Q","R","S","T","U","V","W",
@@ -13,9 +14,11 @@ public class ConverterRunner {
                 "t","u","v","w","x","y","z","+","/"};
         boolean badNumber = true;
         Scanner s = new Scanner(System.in);
+        // Tells you the available base numbers
         System.out.print("Enter the base of your number (2 to 64): ");
         String choice = s.nextLine();
         int base = Integer.parseInt(choice);
+        // Error protection, displays it isn't possible and prompts you to try again.
         while(badNumber) {
             if(base >= 2 && base <= 64) badNumber = false;
             else {

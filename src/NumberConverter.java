@@ -34,6 +34,7 @@ public class NumberConverter {
      */
     private String displayOriginalNumber(String[] numList) {
         String o = "";
+        // "Builds" the string of your number to be used
         for (String num : numList) {
             o += num;
         }
@@ -47,6 +48,8 @@ public class NumberConverter {
      * @return the index of the element that contains "element"
      */
     private int findIndex(String element){
+        // Just finds the index of a certain number in the list
+        // that contains the digits of the original number
         for(int i = 0; i < chars.length; i++){
             if(chars[i].equals(element)) return i;
         }
@@ -72,7 +75,8 @@ public class NumberConverter {
         int sum = 0;
         // Weighted multiplication that occurs with each place value based on the base number to get the decimal value
         for(int i = 0; i < digits.length; i++){
-            newNum[i] = (int) (findIndex(digits[i]) * (Math.pow(base, digits.length - (i + 1)))); // increments through the list by making each place value the value in decimal.
+            newNum[i] = (int) (findIndex(digits[i]) * (Math.pow(base, digits.length - (i + 1))));
+            // increments through the list by making each place value the value in decimal.
             sum+= newNum[i];
         }
         // Just setting each character value to a String[] value so that it can be returned as a String[] in the main method
@@ -101,7 +105,7 @@ public class NumberConverter {
         }
         // Reverse the string to get the correct conversion
         String[] digits = binaryNum.split("");
-        for(int i = 0; i < digits.length / 2; i++){
+        for(int i = 0; i < digits.length / 2; i++){ // We only check up to half the list because by then the entire list will be reversed!
             String temp = digits[i];
             digits[i] = digits[digits.length - (i + 1)];
             digits[digits.length - (i + 1)] = temp;
@@ -115,7 +119,9 @@ public class NumberConverter {
      */
     public String[] convertToOctal() {
         String num = "";
+        // Uses decimal form as a medium to convert to
         String[] newDigits = convertToDecimal();
+        // Makes a string of the original
         String numStr = displayOriginalNumber(newDigits);
         int decNum = Integer.parseInt(numStr);
         base = 8;
@@ -146,7 +152,7 @@ public class NumberConverter {
         String numStr = displayOriginalNumber(newDigits);
         int decNum = Integer.parseInt(numStr);
         base = baseNum;
-        // the repeated division process happens here, where we append the correct number after
+        // the successive division process happens here, where we append the correct number after
         // taking the mod of the number and then dividing it
         while(decNum != 0){
             num += chars[decNum % base];
